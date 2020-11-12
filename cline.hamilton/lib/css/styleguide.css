@@ -204,6 +204,14 @@ code {
    }
 
 
+   .card-section~.card-section {
+      border-top:1px solid var(--color-neutral-light);
+   }
+   .card-section {
+      padding:1em;
+   }
+
+
 
 .well {
     padding: 0.5em;
