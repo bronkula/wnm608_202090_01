@@ -307,6 +307,7 @@ code {
    text-decoration:none;
 }
 
+   .form-button.inline,
    .btn.inline {
       width:initial;
    }
