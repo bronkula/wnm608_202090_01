@@ -319,11 +319,11 @@ code {
 
 
 
-
+.hotdog.stack,
 .hotdog {
    display: inline-flex;
    width: 100%;
-   /* line-height: 3rem; */
+    /*line-height: 3rem; */
    font: inherit;
    background-color: var(--color-neutral-light);
    padding: 0.5em 1.5em;
@@ -336,6 +336,8 @@ code {
       color: var(--color-neutral-light);
    }
 
+   .hotdog.stack button,
+   .hotdog.stack input,
    .hotdog input {
       background-color:transparent;
       border-width:0;
@@ -343,6 +345,26 @@ code {
       outline:0;
       font:inherit;
    }
+
+   .hotdog.stack {
+      padding:0;
+   }
+   .hotdog.stack input {
+      padding:0.5em 1.5em;
+   }
+   .hotdog.stack button {
+      background-color:white;
+      padding:0.5em 1.5em;
+      flex: none;
+   }
+   .hotdog.stack>:first-child {
+      border-radius: 2em 0 0 2em;
+   }
+   .hotdog.stack>:last-child {
+      border-radius: 0 2em 2em 0;
+   }
+
+
 
 
 
