@@ -64,6 +64,10 @@ body {
     display:block;
     height:100%;
 }
+a.product-item:hover {
+  text-decoration:none;
+  transform:scale(1.01);
+}
 .product-item figure {
   margin:0;
 }

@@ -18,7 +18,9 @@ setDefault('limit','12');
 function makeSortOptions() {
    $options = [
       ["date_create","DESC","Latest Products"],
-      ["date_create","ASC","Oldest Products"]
+      ["date_create","ASC","Oldest Products"],
+      ["price","DESC","Most Expensive"],
+      ["price","ASC","Least Expensive"]
    ];
    foreach($options as [$orderby,$direction,$title]) {
       echo "
@@ -30,29 +32,18 @@ function makeSortOptions() {
    }
 }
 
-
-
-
-if(isset($_GET['t'])) {
-
-
-//    $filename = "data/api.php?".http_build_query($_GET);
-// echo $filename;
-   // $result = file_get_json($filename);
-
-
-
-   $result = makeStatement($_GET['t']);
-   $products = isset($result['error']) ? [] : $result;
-
-
-
-   // print_p($result);
-   // die;
-} else {
-   $result = makeStatement('products_all');
-   $products = isset($result['error']) ? [] : $result;
+function makeHiddenValues($arr1,$arr2) {
+   foreach(array_merge($arr1,$arr2) as $k=>$v) {
+      echo "<input type='hidden' name='$k' value='$v'>\n";
+   }
 }
+
+
+
+
+$result = makeStatement($_GET['t']);
+$products = isset($result['error']) ? [] : $result;
+
 
 
 ?><!DOCTYPE html>
@@ -69,29 +60,62 @@ if(isset($_GET['t'])) {
    <div class="container">
 
       <form action="product_list.php" method="get" class="hotdog stack">
+
          <input type="search" name="s" placeholder="Search for a product"
          value="<?= @$_GET['s'] ?>">
 
-         <input type="hidden" name="orderby" value="<?=$_GET['orderby']?>">
-         <input type="hidden" name="orderby_direction" value="<?=$_GET['orderby_direction']?>">
-         <input type="hidden" name="limit" value="<?=$_GET['limit']?>">
+         <?
+         makeHiddenValues([
+            "orderby"=>$_GET['orderby'],
+            "orderby_direction"=>$_GET['orderby_direction'],
+            "limit"=>$_GET['limit'],
+            "t"=>"search"
+         ],[]);
+         ?>
 
-         <input type="hidden" name="t" value="search">
          <button type="submit">Search</button>
       </form>
 
-      <form action="product_list.php" method="get">
-         <input type="hidden" name="s" value="<?=$_GET['s']?>">
-         <input type="hidden" name="limit" value="<?=$_GET['limit']?>">
-         <input type="hidden" name="orderby">
-         <input type="hidden" name="orderby_direction">
+      <div class="display-flex" style="margin:1em 0">
+         <div class="flex-none display-flex">
+            <form action="product_list.php" method="get">
+               <?
+               makeHiddenValues($_GET,[
+                  "category"=>"fruit",
+                  "t"=>"products_by_category"
+               ]);
+               ?>
 
-         <div class="form-select">
-            <select onchange="checkSort(this)">
-               <?=makeSortOptions()?>
-            </select>
+               <input type="submit" value="Fruit" class="form-button">
+            </form>
+            <form action="product_list.php" method="get">
+               <?
+               makeHiddenValues($_GET,[
+                  "category"=>"vegetable",
+                  "t"=>"products_by_category"
+               ]);
+               ?>
+
+               <input type="submit" value="Vegetable" class="form-button">
+            </form>
          </div>
-      </form>
+         <div class="flex-stretch"></div>
+         <div class="flex-none">
+            
+            <form action="product_list.php" method="get">
+
+               <?
+               makeHiddenValues($_GET,[]);
+               ?>
+               <div class="form-select">
+                  <select onchange="checkSort(this)">
+                     <?=makeSortOptions()?>
+                  </select>
+               </div>
+            </form>
+         </div>
+      </div>
+
 
       <h2>Product List</h2>
 
