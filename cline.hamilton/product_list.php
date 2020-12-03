@@ -132,5 +132,11 @@ $products = isset($result['error']) ? [] : $result;
       </div>
    </div>
 
+   <div class="container">
+      <div class="card soft">
+         <a href="admin">Product Admin</a>
+      </div>
+   </div>
+
 </body>
 </html>

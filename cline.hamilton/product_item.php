@@ -86,21 +86,11 @@ $thumbs_elements = array_reduce($thumbs,function($r,$o){
       </div>
          <h2>Related Products</h2>
 
-         <div class="grid gap">
-           
-            <?php
+         <?php
 
-            echo array_reduce(
-               MYSQLIQuery("
-                  SELECT *
-                  FROM products
-                  WHERE id in (4,6,8)
-               "),
-               'makeProductList'
-            );
+         recommendSimilar($product->category,$product->id);
 
-            ?>
-         </div>
+         ?>
    </div>
 
 </body>

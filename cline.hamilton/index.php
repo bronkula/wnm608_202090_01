@@ -1,6 +1,7 @@
 <?php
 
 include_once "lib/php/functions.php";
+include_once "parts/templates.php";
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -16,12 +17,24 @@ include_once "lib/php/functions.php";
 
 
    <div class="view-window" style="background-image:url(img/mountains001.jpg)">
-      <h2>Product Name</h2>
+      <h2>Food Stuffs</h2>
    </div>
    <div class="container">
       <div class="card soft">
          <h2>Welcome to the Store</h2>
       </div>
+   </div>
+
+   <div class="container">
+      <h2>New Fruit</h2>
+
+      <?php recommendCategory('fruit'); ?>
+   </div>
+
+   <div class="container">
+      <h2>New Vegetables</h2>
+
+      <?php recommendCategory('vegetable'); ?>
    </div>
 
 </body>

@@ -94,3 +94,65 @@ return <<<HTML
 </div>
 HTML;
 }
+
+
+
+
+
+
+
+
+function makeAdminList($r,$o) {
+return $r.<<<HTML
+<div class="display-flex card flat soft">
+   <div class="flex-none image-thumbs">
+      <img src="/images/store/$o->image_thumb">
+   </div>
+   <div class="flex-stretch" style="padding:1em">
+      <div><strong>$o->title</strong></div>
+      <div>$o->category</div>
+   </div>
+   <div class="flex-none">
+      <div class="card-section"><a href="admin/?id=$o->id" class="form-button">Edit</a></div>
+      <div class="card-section"><a href="product_item.php?id=$o->id" class="form-button">View</a></div>
+   </div>
+</div>
+HTML;
+}
+
+
+
+
+
+function makeRecommend($a) {
+$products = array_reduce($a,'makeProductList');
+echo <<<HTML
+<div class="grid gap productlist">$products</div>
+HTML;
+}
+
+
+
+function recommendSimilar($cat,$id=0,$limit=3) {
+   $result = MYSQLIQuery("
+         SELECT *
+         FROM products
+         WHERE
+            `category`='$cat' AND
+            `id` <> $id
+         ORDER BY rand()
+         LIMIT $limit
+      ");
+   makeRecommend($result);
+}
+function recommendCategory($cat,$limit=3) {
+   $result = MYSQLIQuery("
+         SELECT *
+         FROM products
+         WHERE
+            `category`='$cat'
+         ORDER BY `date_create` DESC
+         LIMIT $limit
+      ");
+   makeRecommend($result);
+}
